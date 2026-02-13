@@ -52,27 +52,30 @@ const PLACEHOLDER_NEWS: NewsCard[] = [
 ];
 
 export default async function HomePage() {
-  const newsRows = await prisma.news.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    take: 3,
-  });
-
-  const newsCards: NewsCard[] =
-    newsRows.length > 0
-      ? newsRows.map((n: { slug: string; title: string; excerpt: string | null; category: string; publishedAt: Date; image: string | null }) => ({
-          slug: n.slug,
-          title: n.title,
-          excerpt: n.excerpt || "",
-          category: n.category.toUpperCase(),
-          dateStr: new Date(n.publishedAt).toLocaleDateString("tr-TR", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-          image: n.image || PLACEHOLDER_NEWS[0].image,
-        }))
-      : PLACEHOLDER_NEWS;
+  let newsCards: NewsCard[] = PLACEHOLDER_NEWS;
+  try {
+    const newsRows = await prisma.news.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      take: 3,
+    });
+    if (newsRows.length > 0) {
+      newsCards = newsRows.map((n: { slug: string; title: string; excerpt: string | null; category: string; publishedAt: Date; image: string | null }) => ({
+        slug: n.slug,
+        title: n.title,
+        excerpt: n.excerpt || "",
+        category: n.category.toUpperCase(),
+        dateStr: new Date(n.publishedAt).toLocaleDateString("tr-TR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        image: n.image || PLACEHOLDER_NEWS[0].image,
+      }));
+    }
+  } catch {
+    // Veritabanı bağlantı hatası veya tablo yoksa placeholder kullan
+  }
   return (
     <>
       {/* Hero Banner - Okul binası arka plan, sol metin, sağda bursluluk kartı */}

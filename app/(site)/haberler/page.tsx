@@ -28,27 +28,30 @@ const PLACEHOLDER_NEWS = [
 ];
 
 export default async function HaberlerPage() {
-  const news = await prisma.news.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    take: 20,
-  });
-
-  const list =
-    news.length > 0
-      ? news.map((n) => ({
-          slug: n.slug,
-          title: n.title,
-          excerpt: n.excerpt || "",
-          category: n.category,
-          date: new Date(n.publishedAt).toLocaleDateString("tr-TR", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-          image: n.image || PLACEHOLDER_NEWS[0].image,
-        }))
-      : PLACEHOLDER_NEWS;
+  let list = PLACEHOLDER_NEWS;
+  try {
+    const news = await prisma.news.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      take: 20,
+    });
+    if (news.length > 0) {
+      list = news.map((n) => ({
+        slug: n.slug,
+        title: n.title,
+        excerpt: n.excerpt || "",
+        category: n.category,
+        date: new Date(n.publishedAt).toLocaleDateString("tr-TR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        image: n.image || PLACEHOLDER_NEWS[0].image,
+      }));
+    }
+  } catch {
+    // Veritabanı bağlantı hatası veya tablo yoksa placeholder kullan
+  }
 
   return (
     <>
@@ -75,7 +78,7 @@ export default async function HaberlerPage() {
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {list.map((item) => (
+          {list.map((item: { slug: string; title: string; excerpt: string; category: string; date: string; image: string }) => (
             <article
               key={item.slug}
               className="group bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-primary/5 shadow-sm hover:shadow-xl transition-all flex flex-col"

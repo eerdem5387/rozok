@@ -7,9 +7,14 @@ const HAKKIMIZDA_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCrMWCIe2osKNRa42r-xCP1weDITtWsiucqVfgtkRRINrn22XqmlIEMByHYfUh9_Qj-8qqiXHJKMS0dcjH8rX6Cl1RbcvI_5ym_3dL4ZRcnN5pQV0w5fl-2n-xekn2djVkqPBlzRtcQQhZXsy9WUzQYw1pcKvFwOWQUcijk44_fCjqBpiwHEIeeemp6BczhUmqFp4xQwmml5jwxckLSUJuf7eABgiN2X9Aq_6VmaLglZIxYVFLe8GgRmtez4z0NgGGoMd9d4ejao3I";
 
 export default async function HakkimizdaPage() {
-  const members = await prisma.boardMember.findMany({
-    orderBy: [{ isChairman: "desc" }, { order: "asc" }],
-  });
+  let members: { name: string; title: string; role: string; image?: string | null }[] = [];
+  try {
+    members = await prisma.boardMember.findMany({
+      orderBy: [{ isChairman: "desc" }, { order: "asc" }],
+    });
+  } catch {
+    // Veritabanı bağlantı hatası veya tablo yoksa boş liste
+  }
 
   return (
     <>

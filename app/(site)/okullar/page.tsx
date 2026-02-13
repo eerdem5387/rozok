@@ -41,27 +41,35 @@ const DEFAULT_SCHOOLS = [
 ];
 
 export default async function OkullarPage() {
-  const schools = await prisma.school.findMany({
-    where: { published: true },
-    orderBy: { order: "asc" },
-  });
-
-  const list =
-    schools.length > 0
-      ? schools.map((s) => ({
-          slug: s.slug,
-          name: s.name,
-          district: s.district,
-          level: s.level,
-          description: s.description || "",
-          image: s.image || PLACEHOLDER_IMAGES["0"],
-          icon: "school",
-        }))
-      : DEFAULT_SCHOOLS.map((s, i) => ({
-          slug: s.name.toLowerCase().replace(/\s+/g, "-"),
-          ...s,
-          image: s.image,
-        }));
+  let list: { slug: string; name: string; district: string; level: string; description: string; image: string; icon: string }[];
+  try {
+    const schools = await prisma.school.findMany({
+      where: { published: true },
+      orderBy: { order: "asc" },
+    });
+    list =
+      schools.length > 0
+        ? schools.map((s) => ({
+            slug: s.slug,
+            name: s.name,
+            district: s.district,
+            level: s.level,
+            description: s.description || "",
+            image: s.image || PLACEHOLDER_IMAGES["0"],
+            icon: "school",
+          }))
+        : DEFAULT_SCHOOLS.map((s) => ({
+            slug: s.name.toLowerCase().replace(/\s+/g, "-"),
+            ...s,
+            image: s.image,
+          }));
+  } catch {
+    list = DEFAULT_SCHOOLS.map((s) => ({
+      slug: s.name.toLowerCase().replace(/\s+/g, "-"),
+      ...s,
+      image: s.image,
+    }));
+  }
 
   return (
     <>
