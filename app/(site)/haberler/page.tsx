@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const PLACEHOLDER_NEWS = [
   {
     slug: "egitimde-yeni-teknolojiler",

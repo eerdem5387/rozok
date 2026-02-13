@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const PLACEHOLDER_IMAGES: Record<string, string> = {
   "0": "https://lh3.googleusercontent.com/aida-public/AB6AXuB80an7IVevDcnHBRKeSdHCKQnP8g3zSl1irPCOQi6dCioBcl8GZf_JXQsMHLKSv0G1vHjKbBtZoKDkN60TMXmM4gBYvOK17r2qe6T-dbh6Q8Um7BZ1-UBcOsuf-06DE1QEWexhKdhGxw45il0mqSVO_GVlTtNd9HT0FvFLu0FzKF-SzSfT0h-0D244IegYDblqJU-k9eJLmHOeOxFkYZ6sXFnHTHeAedDopNifvFqNh1LZzf0glSTpUnZHNAZOp9TOTiNGMJxKQp8",
   "1": "https://lh3.googleusercontent.com/aida-public/AB6AXuCp32N20-CNHYH6vliaymkPKlDkyX6nhkXHXfH8m_2BmINjB22kNhq1CpZ2dVEN_nC1Z6MzIBBOKQPdPRVbQxjHHqO-SJGrRHgCg68D8wiJ0azAG-5H-h7YegPHdP6uNIkITaT_lcHRNOv0rzllt8yecZWrinKNzjXCf4hHyIfUiw8ApUrmtrl29C9yJIH90cUSXcsIllmSm_nZbrDWhSmwMz7W8zV6FBq_wMdalSHr-RMKi4cfDfNgQk_ftUoMVB9Vlz1QxYwMfNc",

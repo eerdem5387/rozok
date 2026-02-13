@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 const HAKKIMIZDA_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCrMWCIe2osKNRa42r-xCP1weDITtWsiucqVfgtkRRINrn22XqmlIEMByHYfUh9_Qj-8qqiXHJKMS0dcjH8rX6Cl1RbcvI_5ym_3dL4ZRcnN5pQV0w5fl-2n-xekn2djVkqPBlzRtcQQhZXsy9WUzQYw1pcKvFwOWQUcijk44_fCjqBpiwHEIeeemp6BczhUmqFp4xQwmml5jwxckLSUJuf7eABgiN2X9Aq_6VmaLglZIxYVFLe8GgRmtez4z0NgGGoMd9d4ejao3I";
 

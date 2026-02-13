@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 // Modern okul binası görseli (gri-beyaz, banner arka planı için)
 const HERO_BACKGROUND =
   "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=80";
