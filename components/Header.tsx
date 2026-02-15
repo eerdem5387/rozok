@@ -34,7 +34,7 @@ export function Header() {
       {/* Navigasyon */}
       <div className="container mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-3">
-          <div className="relative w-10 h-10 shrink-0">
+          <div className="relative w-16 h-16 shrink-0">
             <Image src="/rozok-logo.svg" alt="Rize Özel Okullar Birliği" fill className="object-contain" />
           </div>
           <div>
