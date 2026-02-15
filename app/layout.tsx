@@ -11,6 +11,11 @@ const lexend = Lexend({
 export const metadata: Metadata = {
   title: "Rize Özel Okullar Birliği",
   description: "Rize'deki özel öğretim kurumlarının kalitesini artırmak ve ortak standartları yükseltmek.",
+  icons: {
+    icon: "/rozok-logo.svg",
+    shortcut: "/rozok-logo.svg",
+    apple: "/rozok-logo.svg",
+  },
 };
 
 export default function RootLayout({

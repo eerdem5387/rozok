@@ -128,8 +128,44 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Sağ: Bursluluk Sınavı kartı */}
-            <div className="md:col-span-6 lg:col-span-5 flex justify-center md:justify-end">
+            {/* Sağ: Üye okul logoları - İlk bakışta görünsün */}
+            <div className="md:col-span-6 lg:col-span-5 flex flex-col items-center justify-center gap-6">
+              <p className="text-sm font-semibold text-white/90 uppercase tracking-wider">
+                Üye Okullarımız
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-md">
+                {[
+                  { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
+                  { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
+                  { slug: "levent-koleji", name: "Levent Okulları", ext: "png" },
+                  { slug: "poyraz-koleji", name: "Poyraz Okulları", ext: "png" },
+                ].map((school) => (
+                  <Link
+                    key={school.slug}
+                    href={`/okullar/${school.slug}`}
+                    className="group flex flex-col items-center gap-2"
+                  >
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-xl bg-white/95 dark:bg-slate-800/95 p-3 border border-white/20 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all">
+                      <Image
+                        src={`/${school.slug}.${school.ext}`}
+                        alt={school.name}
+                        width={96}
+                        height={96}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <span className="text-xs font-semibold text-white/90 text-center group-hover:text-white">
+                      {school.name}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bursluluk kartı - Banner içinde, logoların altında tam genişlik */}
+          <div className="container mx-auto px-4 md:px-6 relative z-10 -mt-4 pb-8">
+            <div className="max-w-md mx-auto md:mx-0 md:ml-auto md:mr-6 lg:mr-12">
               <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 md:p-8 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
                 <div className="absolute top-4 right-4 w-24 h-24 text-slate-100 dark:text-slate-800 select-none pointer-events-none text-7xl font-bold">
                   ★
@@ -184,42 +220,6 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Üye okul logoları - Banner hemen altı */}
-      <section className="bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800 py-10 md:py-14">
-        <div className="container mx-auto px-4 md:px-6">
-          <p className="text-center text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-8">
-            Üye Okullarımız
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 md:gap-x-16">
-            {[
-              { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
-              { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
-              { slug: "levent-koleji", name: "Levent Koleji", ext: "png" },
-              { slug: "poyraz-koleji", name: "Poyraz Koleji", ext: "png" },
-            ].map((school) => (
-              <Link
-                key={school.slug}
-                href={`/okullar/${school.slug}`}
-                className="group flex flex-col items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors"
-              >
-                <div className="relative w-28 h-28 md:w-36 md:h-36 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-slate-700 group-hover:border-primary/30 group-hover:shadow-md transition-all">
-                  <Image
-                    src={`/${school.slug}.${school.ext}`}
-                    alt={school.name}
-                    width={120}
-                    height={120}
-                    className="object-contain w-full h-full"
-                  />
-                </div>
-                <span className="text-sm font-semibold text-center max-w-[140px]">
-                  {school.name}
-                </span>
-              </Link>
-            ))}
           </div>
         </div>
       </section>

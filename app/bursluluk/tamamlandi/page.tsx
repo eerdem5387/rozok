@@ -14,8 +14,8 @@ function TamamlandiContent() {
       <header className="w-full py-4 px-6 md:px-8 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
-              <span className="material-icons text-primary">school</span>
+            <div className="relative w-10 h-10 shrink-0">
+              <Image src="/rozok-logo.svg" alt="Rize Özel Okullar Birliği" fill className="object-contain" />
             </div>
             <div>
               <h1 className="text-slate-900 dark:text-white font-bold text-lg leading-tight uppercase tracking-tight">

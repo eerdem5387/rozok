@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RIZE_OKULLARI, MESLEKLER, SINIFLAR } from "@/lib/bursluluk-constants";
@@ -64,8 +65,8 @@ export default function BurslulukPage() {
       <header className="bg-white dark:bg-slate-900 border-b border-primary/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
           <a href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="material-icons text-white">school</span>
+            <div className="relative w-10 h-10 shrink-0">
+              <Image src="/rozok-logo.svg" alt="Rize Özel Okullar Birliği" fill className="object-contain" />
             </div>
             <div>
               <h1 className="text-xl font-bold tracking-tight">

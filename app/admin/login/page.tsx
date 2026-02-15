@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -39,8 +40,8 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center text-white mx-auto mb-4">
-            <span className="material-icons text-3xl">admin_panel_settings</span>
+          <div className="relative w-14 h-14 mx-auto mb-4">
+            <Image src="/rozok-logo.svg" alt="RÖOB" fill className="object-contain" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             CMS Girişi

@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function AdminLayout({
   children,
@@ -16,7 +17,9 @@ export default async function AdminLayout({
           <aside className="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col">
             <div className="p-6 border-b border-slate-200 dark:border-slate-700">
               <Link href="/admin" className="flex items-center gap-2">
-                <span className="material-icons text-primary">dashboard</span>
+                <div className="relative w-8 h-8 shrink-0">
+                  <Image src="/rozok-logo.svg" alt="RÖOB" fill className="object-contain" />
+                </div>
                 <span className="font-bold text-slate-900 dark:text-white">
                   RÖOB CMS
                 </span>

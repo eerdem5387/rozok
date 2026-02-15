@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 export default function IletisimPage() {
@@ -217,8 +218,8 @@ export default function IletisimPage() {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-xl ring-4 ring-white dark:ring-slate-900 relative z-10">
-                <span className="material-icons text-white text-base">school</span>
+              <div className="w-10 h-10 relative z-10 shadow-xl ring-4 ring-white dark:ring-slate-900 rounded-full overflow-hidden bg-white dark:bg-slate-900 flex items-center justify-center p-1">
+                <Image src="/rozok-logo.svg" alt="RÖOB" width={32} height={32} className="object-contain" />
               </div>
               <div className="absolute top-10 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 px-4 py-2 rounded shadow-lg border border-slate-100 dark:border-slate-800 whitespace-nowrap">
                 <span className="text-xs font-bold text-slate-800 dark:text-white">
