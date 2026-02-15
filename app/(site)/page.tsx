@@ -78,8 +78,8 @@ export default async function HomePage() {
   }
   return (
     <>
-      {/* Hero Banner - Okul binası arka plan, sol metin, sağda bursluluk kartı */}
-      <section className="relative min-h-[600px] md:min-h-[700px] flex items-center overflow-hidden">
+      {/* Hero Banner - Okul binası arka plan, sol metin, sağda bursluluk kartı (ilk ekrana sığacak şekilde kompakt) */}
+      <section className="relative min-h-0 flex items-start overflow-hidden">
         {/* Arka plan: modern okul binası, hafif bulanık ve yarı saydam */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -96,13 +96,13 @@ export default async function HomePage() {
           />
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 py-16 md:py-24">
-          {/* Üye okul logoları - "Eğitimde Birlik..." yazısının üstünde */}
-          <div className="mb-8 md:mb-10">
-            <p className="text-center md:text-left text-sm font-semibold text-white/90 uppercase tracking-wider mb-4">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 pt-6 pb-10 md:pt-8 md:pb-12 lg:pt-10 lg:pb-14">
+          {/* Üye okul logoları - "Eğitimde Birlik..." yazısının üstünde, kompakt */}
+          <div className="mb-4 md:mb-6">
+            <p className="text-center md:text-left text-xs md:text-sm font-semibold text-white/90 uppercase tracking-wider mb-3">
               Üye Okullarımız
             </p>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 md:gap-6">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4">
               {[
                 { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
                 { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
@@ -112,18 +112,18 @@ export default async function HomePage() {
                 <Link
                   key={school.slug}
                   href={`/okullar/${school.slug}`}
-                  className="group flex flex-col items-center gap-2"
+                  className="group flex flex-col items-center gap-1"
                 >
-                  <div className="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-xl bg-white/95 dark:bg-slate-800/95 p-2.5 border border-white/20 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center rounded-lg bg-white/95 dark:bg-slate-800/95 p-1.5 border border-white/20 shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
                     <Image
                       src={`/${school.slug}.${school.ext}`}
                       alt={school.name}
-                      width={80}
-                      height={80}
+                      width={64}
+                      height={64}
                       className="object-contain w-full h-full"
                     />
                   </div>
-                  <span className="text-xs font-semibold text-white/90 text-center max-w-[100px] group-hover:text-white">
+                  <span className="text-[10px] sm:text-xs font-semibold text-white/90 text-center max-w-[80px] sm:max-w-[100px] group-hover:text-white leading-tight">
                     {school.name}
                   </span>
                 </Link>
@@ -131,65 +131,65 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="grid md:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
             {/* Sol: Tanıtım içeriği */}
             <div className="md:col-span-6 lg:col-span-7">
-              <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-rize-green/90 text-white text-sm font-semibold mb-6">
+              <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-rize-green/90 text-white text-sm font-semibold mb-4">
                 Eğitimde Birlik, Gelecekte Güven
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
                 Rize Özel Okullar Birliği Geleceği{" "}
                 <span className="text-blue-300 block md:inline">Şekillendiriyor.</span>
               </h2>
-              <p className="text-lg md:text-xl text-slate-200 max-w-xl mb-8 leading-relaxed">
+              <p className="text-base md:text-lg lg:text-xl text-slate-200 max-w-xl mb-6 leading-relaxed">
                 Rize&apos;deki özel ortaokul ve liselerimiz, akademik başarı ve karakter
                 gelişimi için tek çatı altında birleşiyor.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   href="/okullar"
-                  className="bg-primary text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-primary/90 transition-all inline-flex items-center gap-2"
+                  className="bg-primary text-white px-5 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all inline-flex items-center gap-2 text-sm md:text-base"
                 >
                   Üye Okulları Keşfet
                   <span className="material-icons text-lg">arrow_forward</span>
                 </Link>
                 <Link
                   href="/hakkimizda"
-                  className="bg-white/95 text-slate-900 px-6 py-3.5 rounded-lg font-semibold border-2 border-primary/30 hover:bg-white transition-all"
+                  className="bg-white/95 text-slate-900 px-5 py-3 rounded-lg font-semibold border-2 border-primary/30 hover:bg-white transition-all text-sm md:text-base"
                 >
                   Birlik Hakkında
                 </Link>
               </div>
             </div>
 
-            {/* Sağ: Bursluluk Sınavı kartı - Eski yeri */}
+            {/* Sağ: Bursluluk Sınavı kartı - kompakt, ilk ekrana sığacak */}
             <div className="md:col-span-6 lg:col-span-5 flex justify-center md:justify-end">
-              <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 md:p-8 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
-                <div className="absolute top-4 right-4 w-24 h-24 text-slate-100 dark:text-slate-800 select-none pointer-events-none text-7xl font-bold">
+              <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-4 sm:p-5 md:p-6 border border-slate-100 dark:border-slate-800 relative overflow-hidden">
+                <div className="absolute top-3 right-3 w-16 h-16 md:w-20 md:h-20 text-slate-100 dark:text-slate-800 select-none pointer-events-none text-5xl md:text-6xl font-bold">
                   ★
                 </div>
                 <div className="relative">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="material-icons text-primary text-2xl">school</span>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="material-icons text-primary text-xl md:text-2xl">school</span>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
                       2026-2027 Bursluluk Sınavı
                     </h3>
                   </div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm mb-2">
                     Akademik Burs Fırsatı
                   </p>
-                  <div className="inline-block px-3 py-1 rounded-lg bg-rize-green text-white text-xs font-bold uppercase mb-6">
+                  <div className="inline-block px-2.5 py-1 rounded-lg bg-rize-green text-white text-xs font-bold uppercase mb-4">
                     Ücretsiz Sınav
                   </div>
-                  <div className="mb-6">
-                    <p className="text-3xl font-bold text-primary">8. SINIF</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <div className="mb-4">
+                    <p className="text-2xl md:text-3xl font-bold text-primary">8. SINIF</p>
+                    <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                       Bursluluk Sınavı
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                  <div className="grid grid-cols-2 gap-3 mb-4 text-xs md:text-sm">
                     <div>
-                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-1">
+                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-0.5">
                         Sınav Tarihi
                       </p>
                       <p className="font-bold text-slate-900 dark:text-white">
@@ -197,7 +197,7 @@ export default async function HomePage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-1">
+                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-0.5">
                         Diğer Sınıflar
                       </p>
                       <p className="font-bold text-slate-900 dark:text-white">
@@ -207,12 +207,12 @@ export default async function HomePage() {
                   </div>
                   <Link
                     href="/bursluluk"
-                    className="w-full flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-bold hover:bg-primary/90 transition-all"
+                    className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 md:py-3.5 rounded-xl font-bold hover:bg-primary/90 transition-all text-sm md:text-base"
                   >
                     Hemen Başvur
-                    <span className="material-icons">arrow_forward</span>
+                    <span className="material-icons text-lg">arrow_forward</span>
                   </Link>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 text-center">
+                  <p className="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 mt-2 text-center">
                     * Son başvuru tarihi: 26 Mart 2026
                   </p>
                 </div>
