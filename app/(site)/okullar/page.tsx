@@ -1,76 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-const PLACEHOLDER_IMAGES: Record<string, string> = {
-  "0": "https://lh3.googleusercontent.com/aida-public/AB6AXuB80an7IVevDcnHBRKeSdHCKQnP8g3zSl1irPCOQi6dCioBcl8GZf_JXQsMHLKSv0G1vHjKbBtZoKDkN60TMXmM4gBYvOK17r2qe6T-dbh6Q8Um7BZ1-UBcOsuf-06DE1QEWexhKdhGxw45il0mqSVO_GVlTtNd9HT0FvFLu0FzKF-SzSfT0h-0D244IegYDblqJU-k9eJLmHOeOxFkYZ6sXFnHTHeAedDopNifvFqNh1LZzf0glSTpUnZHNAZOp9TOTiNGMJxKQp8",
-  "1": "https://lh3.googleusercontent.com/aida-public/AB6AXuCp32N20-CNHYH6vliaymkPKlDkyX6nhkXHXfH8m_2BmINjB22kNhq1CpZ2dVEN_nC1Z6MzIBBOKQPdPRVbQxjHHqO-SJGrRHgCg68D8wiJ0azAG-5H-h7YegPHdP6uNIkITaT_lcHRNOv0rzllt8yecZWrinKNzjXCf4hHyIfUiw8ApUrmtrl29C9yJIH90cUSXcsIllmSm_nZbrDWhSmwMz7W8zV6FBq_wMdalSHr-RMKi4cfDfNgQk_ftUoMVB9Vlz1QxYwMfNc",
-  "2": "https://lh3.googleusercontent.com/aida-public/AB6AXuBFtV6WpClGqgGfYuGK6yopie7Bj86iGPQXtzoAkBNTPgODG3N-O8giWFUrzJ3SrvT6FugxAYfREt5CHwp5KnTCs2orEKj485l50elaAF0jfZihjlPbS-EdCr13lSO5TH7ICQHv2zWidEexOJLYiMBhQRRoG9rM8u02arp7b_8377e4d95j3ncO4-x-Kw2nA7ZLpNvHwVfsf9RQIa67p28rtd8Rw1wmEGJ0UHa6Mr7U3P_ieojAhV-oqnk4uvFxu3CUs981-nTm6Tk",
-};
-
-const DEFAULT_SCHOOLS = [
+// Üye okullar: logo ve kendi web sitelerine link. Linkleri aşağıya ekleyebilirsiniz.
+const UYE_OKULLAR = [
   {
-    name: "Rize Bilim Koleji",
-    district: "Rize Merkez",
-    level: "Lise",
-    description:
-      "Fen ve teknoloji odaklı eğitim anlayışıyla geleceğin bilim insanlarını yetiştiren öncü eğitim kurumu.",
-    image: PLACEHOLDER_IMAGES["0"],
-    icon: "account_balance",
+    slug: "bahcesehir-koleji",
+    name: "Bahçeşehir Koleji",
+    logoExt: "jpg",
+    websiteUrl: "https://bahcesehir.k12.tr/", // Örn: "https://www.bahcesehirkoleji.k12.tr"
   },
   {
-    name: "Fırtına Fen Lisesi",
-    district: "Ardeşen",
-    level: "Lise",
-    description:
-      "Ardeşen'in kalbinde, akademik başarı odaklı ve sosyal gelişimi destekleyen disiplinli eğitim modeli.",
-    image: PLACEHOLDER_IMAGES["1"],
-    icon: "science",
+    slug: "cozum-koleji",
+    name: "Çözüm Koleji",
+    logoExt: "png",
+    websiteUrl: "https://www.cozumkoleji.com.tr/tr/rize-muradiye-cozum-koleji", // Örn: "https://www.cozumkoleji.com"
   },
   {
-    name: "Karadeniz Ortaokulu",
-    district: "Çayeli",
-    level: "Ortaokul",
-    description:
-      "Çocuklarımızın bireysel yeteneklerini keşfettiği, güvenli ve sevgi dolu bir ortaöğretim ortamı.",
-    image: PLACEHOLDER_IMAGES["2"],
-    icon: "psychology",
+    slug: "levent-koleji",
+    name: "Levent Okulları",
+    logoExt: "png",
+    websiteUrl: "https://leventokullari.com/", // Örn: "https://www.leventokullari.com"
+  },
+  {
+    slug: "poyraz-koleji",
+    name: "Poyraz Okulları",
+    logoExt: "png",
+    websiteUrl: "https://poyrazokullari.com/", // Örn: "https://www.poyrazokullari.com"
   },
 ];
 
-export default async function OkullarPage() {
-  let list: { slug: string; name: string; district: string; level: string; description: string; image: string; icon: string }[];
-  try {
-    const schools = await prisma.school.findMany({
-      where: { published: true },
-      orderBy: { order: "asc" },
-    });
-    list =
-      schools.length > 0
-        ? schools.map((s) => ({
-            slug: s.slug,
-            name: s.name,
-            district: s.district,
-            level: s.level,
-            description: s.description || "",
-            image: s.image || PLACEHOLDER_IMAGES["0"],
-            icon: "school",
-          }))
-        : DEFAULT_SCHOOLS.map((s) => ({
-            slug: s.name.toLowerCase().replace(/\s+/g, "-"),
-            ...s,
-            image: s.image,
-          }));
-  } catch {
-    list = DEFAULT_SCHOOLS.map((s) => ({
-      slug: s.name.toLowerCase().replace(/\s+/g, "-"),
-      ...s,
-      image: s.image,
-    }));
-  }
-
+export default function OkullarPage() {
   return (
     <>
       <section className="bg-primary/5 dark:bg-primary/10 py-12">
@@ -90,69 +51,56 @@ export default async function OkullarPage() {
       <main className="container mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
           <p className="text-slate-500 font-medium">
-            Toplam <span className="text-primary font-bold">{list.length}</span>{" "}
+            Toplam <span className="text-primary font-bold">{UYE_OKULLAR.length}</span>{" "}
             okul listeleniyor
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {list.map((school) => (
-            <div
-              key={school.slug}
-              className="group bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 flex flex-col"
-            >
-              <div className="relative h-48 bg-slate-100 overflow-hidden">
-                <Image
-                  alt={school.name}
-                  src={school.image}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span
-                    className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg ${
-                      school.level === "Ortaokul"
-                        ? "bg-rize-green text-white"
-                        : "bg-primary text-white"
-                    }`}
-                  >
-                    {school.level}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {UYE_OKULLAR.map((school) => {
+            const hasLink = !!school.websiteUrl;
+            const cardContent = (
+              <>
+                <div className="relative w-40 h-40 md:w-48 md:h-48 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/50 p-6 mb-6">
+                  <Image
+                    src={`/${school.slug}.${school.logoExt}`}
+                    alt={school.name}
+                    width={192}
+                    height={192}
+                    className="object-contain w-full h-full"
+                  />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  {school.name}
+                </h3>
+                {hasLink ? (
+                  <span className="text-primary font-semibold text-sm inline-flex items-center gap-1">
+                    Siteye git
+                    <span className="material-icons text-base">open_in_new</span>
                   </span>
-                </div>
+                ) : (
+                  <span className="text-slate-400 text-sm">Link eklenmedi</span>
+                )}
+              </>
+            );
+            const cardClass = `group flex flex-col items-center text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 transition-all duration-300 ${
+              hasLink ? "hover:shadow-xl hover:border-primary/30" : ""
+            }`;
+            return hasLink ? (
+              <a
+                key={school.slug}
+                href={school.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cardClass}
+              >
+                {cardContent}
+              </a>
+            ) : (
+              <div key={school.slug} className={cardClass}>
+                {cardContent}
               </div>
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="material-icons text-primary">
-                      {"icon" in school && (school as { icon?: string }).icon
-                        ? (school as { icon: string }).icon
-                        : "school"}
-                    </span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                      {school.name}
-                    </h4>
-                    <p className="text-xs text-slate-500 flex items-center gap-1">
-                      <span className="material-icons text-[12px]">place</span>
-                      {school.district}
-                    </p>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 line-clamp-2">
-                  {school.description}
-                </p>
-                <div className="mt-auto">
-                  <Link
-                    href={`/okullar/${school.slug}`}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 bg-white dark:bg-slate-800 border-2 border-primary/20 hover:border-primary text-primary dark:text-white font-bold text-sm rounded-lg transition-all group-hover:bg-primary group-hover:text-white"
-                  >
-                    Detayları Gör
-                    <span className="material-icons text-sm">open_in_new</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </main>
 

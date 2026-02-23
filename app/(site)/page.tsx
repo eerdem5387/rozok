@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -8,74 +7,27 @@ export const dynamic = "force-dynamic";
 const HERO_BACKGROUND =
   "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1920&q=80";
 
-type NewsCard = {
-  slug: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  dateStr: string;
-  image: string;
-};
-
-// Anasayfa haber kartları için placeholder (veritabanında haber yoksa)
-const PLACEHOLDER_NEWS: NewsCard[] = [
+// Anasayfa "Haberler ve Duyurular" alanı için sabit duyurular (tıklanmaz)
+const ANA_SAYFA_DUYURULAR = [
   {
-    slug: "egitimde-yenilikci-yaklasimlar-semineri",
-    title: "Eğitimde Yenilikçi Yaklaşımlar Semineri Tamamlandı",
+    category: "HABER",
+    title: "LGS TÜRKİYE GENELİ SINAVI",
     excerpt:
-      "Rize genelindeki öğretmenlerimizin katılımıyla gerçekleşen seminerde dijital dönüşüm ele alındı...",
-    category: "ETKİNLİK",
-    dateStr: "12 Şubat 2026",
+      "28-29 MART 2026 tarihinde RECEP TAYYİP ERDOĞAN ÜNİVERSİTESİ'nde LGS Türkiye Geneli Deneme Sınavı yapılacaktır. Tüm 8.sınıflar davetlidir. Başvuru Ücretsizdir.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDTpApVSi7sy0knZIBIyF2QoJKl0FH2hxLyjQyvl7SwjjkOBvuXJ-uMP1cpVbu6v-z52YYLiXiZhXidmQesP_oiClGp9BApbyifWytEQhR2xxOCx6sgFIjjhsBKDJ02DWM_c5Iunk-XxuO-s_XuZ3GqdgZsZLZapCX5yla_yDGMTsPUU3B__EkYOPYJXu3CgYAURcvoUbRObdkWe2UtUzQ3-ja9FBQLN6fPf6OM7wl0VdHaLOGGR4DTDc3cr7bRtPBgXajN3Urz4NY",
+      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
   },
   {
-    slug: "yks-gurur-tablomuz",
-    title: "YKS Gurur Tablomuz Yayınlandı",
+    category: "HABER",
+    title: "9., 10., 11. SINIF PROVA SINAVLARI",
     excerpt:
-      "Üye okullarımızın öğrencileri bu yıl da Türkiye dereceleriyle bizleri gururlandırdı.",
-    category: "BAŞARI",
-    dateStr: "05 Şubat 2026",
+      "28-29 MART 2026 tarihinde Lise 9. 10. 11. sınıflar için TYT Prova Sınavı yapılacaktır. Başvuru Ücretsizdir.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD59_tAUjbxZwELgCJCt02yP4XVXUeVVCtKxGgWDNHm0zp4qYF4ClidOEXYll_VuGSud-sBc0ONN5k58-pfcQeYYWtcOmjCyd_tUfKVa77pP6RI4K8dWNsyjdDhtXP18HPn5-7wwRcjlCt_MOZ92ZvCBe1fHHqoZ6ML822j1lejeiZxo7pY37NaWxMXa7paZnQMSQIh3VjHcSI-pvDc4iMmSrbBf6N7xHQ8Al-2RTZsOE5x5lcx5s_40wDAUWmJvER-P5cZWKjd6MI",
-  },
-  {
-    slug: "bursluluk-sinavi-kilavuzu",
-    title: "2026-2027 Bursluluk Sınavı Kılavuzu Yayınlandı",
-    excerpt:
-      "Sınav kapsamı, soru dağılımı ve burs oranları hakkında detaylı bilgilere ulaşabilirsiniz...",
-    category: "DUYURU",
-    dateStr: "28-29 Mart 2026",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAWo32xf0knrEzVYXW-5PNLw2IjChFCLJj1CUmuJeVRzpQJzV98gibLb-b4iI7FlDTP7tAFGJnY68LXgNgDRMORf0AJOaYV7acDV300XvG-GGGU9v23rjuudRICP3G-u4xAsxsEBVXnpirJu-iBHHBlQJ3i7iEaT1u10B0t1DkwEXnQj9mTaGBSJXs2GTn4deMywbxIFdL52mQrBE6mY6KWyYyIFqCAS1orct8ZuQ3Q62vS1qBE71rgK1_yiQ-Wug6Ev7GVZ7kUDGA",
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
   },
 ];
 
 export default async function HomePage() {
-  let newsCards: NewsCard[] = PLACEHOLDER_NEWS;
-  try {
-    const newsRows = await prisma.news.findMany({
-      where: { published: true },
-      orderBy: { publishedAt: "desc" },
-      take: 3,
-    });
-    if (newsRows.length > 0) {
-      newsCards = newsRows.map((n: { slug: string; title: string; excerpt: string | null; category: string; publishedAt: Date; image: string | null }) => ({
-        slug: n.slug,
-        title: n.title,
-        excerpt: n.excerpt || "",
-        category: n.category.toUpperCase(),
-        dateStr: new Date(n.publishedAt).toLocaleDateString("tr-TR", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }),
-        image: n.image || PLACEHOLDER_NEWS[0].image,
-      }));
-    }
-  } catch {
-    // Veritabanı bağlantı hatası veya tablo yoksa placeholder kullan
-  }
   return (
     <>
       {/* Hero Banner - Okul binası arka plan, sol metin, sağda bursluluk kartı (ilk ekrana sığacak şekilde kompakt) */}
@@ -97,40 +49,6 @@ export default async function HomePage() {
         </div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10 pt-6 pb-10 md:pt-8 md:pb-12 lg:pt-10 lg:pb-14">
-          {/* Üye okul logoları - "Eğitimde Birlik..." yazısının üstünde, kompakt */}
-          <div className="mb-4 md:mb-6">
-            <p className="text-center md:text-left text-xs md:text-sm font-semibold text-white/90 uppercase tracking-wider mb-3">
-              Üye Okullarımız
-            </p>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4">
-              {[
-                { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
-                { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
-                { slug: "levent-koleji", name: "Levent Okulları", ext: "png" },
-                { slug: "poyraz-koleji", name: "Poyraz Okulları", ext: "png" },
-              ].map((school) => (
-                <Link
-                  key={school.slug}
-                  href={`/okullar/${school.slug}`}
-                  className="group flex flex-col items-center gap-1"
-                >
-                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center rounded-lg bg-white/95 dark:bg-slate-800/95 p-1.5 border border-white/20 shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
-                    <Image
-                      src={`/${school.slug}.${school.ext}`}
-                      alt={school.name}
-                      width={64}
-                      height={64}
-                      className="object-contain w-full h-full"
-                    />
-                  </div>
-                  <span className="text-[10px] sm:text-xs font-semibold text-white/90 text-center max-w-[80px] sm:max-w-[100px] group-hover:text-white leading-tight">
-                    {school.name}
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
           <div className="grid md:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-start">
             {/* Sol: Tanıtım içeriği */}
             <div className="md:col-span-6 lg:col-span-7">
@@ -172,7 +90,7 @@ export default async function HomePage() {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="material-icons text-primary text-xl md:text-2xl">school</span>
                     <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
-                      2026-2027 Bursluluk Sınavı
+                      2026-2027 Ortak Katılım Sınavı
                     </h3>
                   </div>
                   <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm mb-2">
@@ -181,29 +99,27 @@ export default async function HomePage() {
                   <div className="inline-block px-2.5 py-1 rounded-lg bg-rize-green text-white text-xs font-bold uppercase mb-4">
                     Ücretsiz Sınav
                   </div>
-                  <div className="mb-4">
-                    <p className="text-2xl md:text-3xl font-bold text-primary">8. SINIF</p>
-                    <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                      Bursluluk Sınavı
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 mb-4 text-xs md:text-sm">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-0.5">
-                        Sınav Tarihi
-                      </p>
-                      <p className="font-bold text-slate-900 dark:text-white">
-                        28-29 Mart 2026
+                      <p className="text-2xl md:text-3xl font-bold text-primary">8. SINIF</p>
+                      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-0.5">
+                        LGS TÜRKİYE GENELİ SINAV
                       </p>
                     </div>
-                    <div>
-                      <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-0.5">
+                    <div className="text-right">
+                      <p className="text-2xl md:text-3xl font-bold text-primary">9, 10, 11</p>
+                      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-0.5">
                         Diğer Sınıflar
                       </p>
-                      <p className="font-bold text-slate-900 dark:text-white">
-                        9, 10, 11
-                      </p>
                     </div>
+                  </div>
+                  <div className="mb-4 text-xs md:text-sm">
+                    <p className="text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider mb-0.5">
+                      Sınav Tarihi
+                    </p>
+                    <p className="font-bold text-slate-900 dark:text-white">
+                      28-29 Mart 2026
+                    </p>
                   </div>
                   <Link
                     href="/bursluluk"
@@ -222,7 +138,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Haberler ve Duyurular - Logoların hemen altı (HTML tasarımı) */}
+      {/* Haberler ve Duyurular - Sabit 2 duyuru, tıklanmaz */}
       <section className="bg-background-light dark:bg-background-dark/50 py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
@@ -234,45 +150,79 @@ export default async function HomePage() {
                 Birlikten en son gelişmeler, etkinlikler ve eğitim haberleri.
               </p>
             </div>
-            <Link
-              href="/haberler"
-              className="text-primary font-semibold inline-flex items-center hover:underline shrink-0"
-            >
-              Tümünü Gör
-              <span className="material-icons text-sm ml-1">arrow_forward</span>
-            </Link>
+            
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {newsCards.map((item: NewsCard) => (
-              <Link
-                key={item.slug}
-                href={`/haberler/${item.slug}`}
-                className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 dark:border-slate-700"
+          <div className="grid md:grid-cols-2 gap-8">
+            {ANA_SAYFA_DUYURULAR.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700"
               >
-                <div className="h-48 overflow-hidden relative">
+                <div className="h-48 md:h-52 relative">
                   <Image
                     src={item.image}
-                    alt={item.title}
-                    width={400}
-                    height={192}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 md:p-8">
                   <span className="text-xs font-bold text-rize-green mb-2 block uppercase tracking-wider">
                     {item.category}
                   </span>
-                  <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
                     {item.title}
-                  </h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">
+                  </h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                     {item.excerpt}
                   </p>
-                  <div className="flex items-center text-slate-400 dark:text-slate-500 text-xs">
-                    <span className="material-icons text-xs mr-1">calendar_today</span>
-                    {item.dateStr}
-                  </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Üye Okullarımız - Haberler ile footer arasında, büyük vurgulu alan */}
+      <section className="bg-slate-100 dark:bg-slate-800/50 border-y border-slate-200 dark:border-slate-700 py-20 md:py-28">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-14 md:mb-20">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-4">
+              Üye Okullarımız
+            </h2>
+            <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+              Rize Özel Okullar Birliği çatısı altında bir araya gelen okullarımız.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {[
+              { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
+              { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
+              { slug: "levent-koleji", name: "Levent Okulları", ext: "png" },
+              { slug: "poyraz-koleji", name: "Poyraz Okulları", ext: "png" },
+            ].map((school) => (
+              <Link
+                key={school.slug}
+                href={`/okullar/${school.slug}`}
+                className="group flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square max-w-[280px] mx-auto flex items-center justify-center rounded-3xl bg-white dark:bg-slate-800 p-8 md:p-10 border-2 border-slate-200 dark:border-slate-700 shadow-lg group-hover:shadow-2xl group-hover:border-primary/40 group-hover:scale-[1.02] transition-all duration-300">
+                  <Image
+                    src={`/${school.slug}.${school.ext}`}
+                    alt={school.name}
+                    width={240}
+                    height={240}
+                    className="object-contain w-full h-full"
+                  />
+                </div>
+                <h3 className="mt-6 text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  {school.name}
+                </h3>
+                <span className="mt-2 text-primary font-semibold text-sm inline-flex items-center gap-1">
+                  Okulu incele
+                  <span className="material-icons text-base">arrow_forward</span>
+                </span>
               </Link>
             ))}
           </div>

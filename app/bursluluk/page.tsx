@@ -88,6 +88,16 @@ export default function BurslulukPage() {
           <div className="lg:col-span-8">
             <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl p-8 border border-slate-100 dark:border-slate-800">
               <form onSubmit={handleSubmit} className="space-y-10">
+                {/* Uyarı: Sınav yeri SMS ile bildirilecek */}
+                <div className="flex gap-3 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50">
+                  <span className="material-icons text-amber-600 dark:text-amber-400 shrink-0 text-2xl" aria-hidden>
+                    warning
+                  </span>
+                  <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                    Sınav yeri başvurunuz onaylandıktan sonra SMS ile bildirilecektir. Telefon numaranızın doğruluğundan emin olunuz.
+                  </p>
+                </div>
+
                 {/* Öğrenci Bilgileri */}
                 <div>
                   <div className="flex items-center gap-2 mb-6">

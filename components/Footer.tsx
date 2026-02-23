@@ -5,13 +5,13 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-white pt-20 pb-10">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative w-14 h-14 shrink-0">
                 <Image src="/rozok-logo.svg" alt="RÖOB" fill className="object-contain" />
               </div>
-              <span className="text-lg font-bold tracking-tight">RİZE ÖOB</span>
+              <span className="text-lg font-bold tracking-tight">R.Ö.Z.O.K BİR</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
               Rize Özel Okullar Birliği olarak şehrimizdeki eğitim standartlarını
@@ -42,27 +42,6 @@ export function Footer() {
                 <Link href="/iletisim" className="hover:text-primary transition-colors">
                   Üyelik Koşulları
                 </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h6 className="text-sm font-bold uppercase tracking-widest mb-6">
-              İletişim
-            </h6>
-            <ul className="space-y-4 text-sm text-slate-400">
-              <li className="flex items-start space-x-3">
-                <span className="material-icons text-primary text-sm mt-1">
-                  location_on
-                </span>
-                <span>Atatürk Cad. No:53 Merkez, Rize</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <span className="material-icons text-primary text-sm">phone</span>
-                <span>+90 (464) 123 45 67</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <span className="material-icons text-primary text-sm">mail</span>
-                <span>info@rizeoob.org.tr</span>
               </li>
             </ul>
           </div>

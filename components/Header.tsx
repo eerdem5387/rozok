@@ -9,7 +9,6 @@ export function Header() {
     { href: "/hakkimizda", label: "Hakkımızda" },
     { href: "/okullar", label: "Üye Okullar" },
     { href: "/haberler", label: "Duyurular" },
-    { href: "/iletisim", label: "İletişim" },
   ];
 
   return (
@@ -17,14 +16,6 @@ export function Header() {
       {/* Üst bilgi çubuğu */}
       <div className="bg-primary text-white text-sm">
         <div className="container mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href="tel:+904642130000" className="hover:opacity-90">
-              +90 (464) 213 00 00
-            </a>
-            <a href="mailto:info@rizeozelokullar.org.tr" className="hover:opacity-90">
-              info@rizeozelokullar.org.tr
-            </a>
-          </div>
           <div className="hidden sm:flex items-center gap-4">
             <span>TR</span>
             <span>Merkez, Rize</span>
