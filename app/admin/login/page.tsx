@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -96,5 +96,30 @@ export default function AdminLoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+function LoginFallback() {
+  return (
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 animate-pulse">
+        <div className="h-14 mx-auto mb-4 bg-slate-200 dark:bg-slate-700 rounded" />
+        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded mb-2 w-3/4 mx-auto" />
+        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2 mx-auto mb-8" />
+        <div className="space-y-5">
+          <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded" />
+          <div className="h-12 bg-slate-200 dark:bg-slate-700 rounded" />
+          <div className="h-12 bg-primary/20 rounded" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<LoginFallback />}>
+      <AdminLoginForm />
+    </Suspense>
   );
 }
