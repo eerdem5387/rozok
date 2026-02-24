@@ -112,10 +112,35 @@ export async function POST(request: Request) {
       },
     });
     return NextResponse.json({ refNo });
-  } catch (e) {
-    console.error(e);
+  } catch (e: unknown) {
+    const err = e as { code?: string; message?: string };
+    console.error("[api/bursluluk] POST error:", err);
+
+    // Veritabanı bağlantı / tablo hatalarında kullanıcıya net mesaj
+    if (err && typeof err === "object" && "code" in err) {
+      const code = String((err as { code?: string }).code);
+      if (code === "P1001" || code === "P1002" || code === "P1017") {
+        return NextResponse.json(
+          { error: "Veritabanı bağlantısı kurulamadı. Lütfen daha sonra tekrar deneyin veya bizimle iletişime geçin." },
+          { status: 503 }
+        );
+      }
+      if (code === "P2002") {
+        return NextResponse.json(
+          { error: "Bu başvuru numarası zaten kullanılıyor. Lütfen sayfayı yenileyip tekrar deneyin." },
+          { status: 409 }
+        );
+      }
+      if (code.startsWith("P2")) {
+        return NextResponse.json(
+          { error: "Veritabanı yapılandırması güncel değil olabilir. Lütfen site yöneticisi ile iletişime geçin." },
+          { status: 500 }
+        );
+      }
+    }
+
     return NextResponse.json(
-      { error: "Başvuru kaydedilemedi." },
+      { error: "Başvuru kaydedilemedi. Lütfen daha sonra tekrar deneyin veya bizimle iletişime geçin." },
       { status: 500 }
     );
   }
