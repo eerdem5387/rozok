@@ -5,16 +5,28 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminDashboardPage() {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    redirect("/admin/login");
+  }
   if (!session) redirect("/admin/login");
 
-  const [schoolsCount, newsCount, messagesCount, basvuruCount] =
-    await Promise.all([
+  let schoolsCount = 0;
+  let newsCount = 0;
+  let messagesCount = 0;
+  let basvuruCount = 0;
+  try {
+    [schoolsCount, newsCount, messagesCount, basvuruCount] = await Promise.all([
       prisma.school.count(),
       prisma.news.count(),
       prisma.contactMessage.count({ where: { read: false } }),
       prisma.burslulukBasvuru.count(),
     ]);
+  } catch {
+    // Veritabanı hatası - sayfa yine de açılsın, sayılar 0 görünsün
+  }
 
   return (
     <div>

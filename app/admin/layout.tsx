@@ -8,7 +8,12 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    // NEXTAUTH_SECRET / NEXTAUTH_URL eksikse veya auth hatası olursa en azından login sayfası açılsın
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex">
