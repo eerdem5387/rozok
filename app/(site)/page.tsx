@@ -197,14 +197,36 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             {[
-              { slug: "bahcesehir-koleji", name: "Bahçeşehir Koleji", ext: "jpg" },
-              { slug: "cozum-koleji", name: "Çözüm Koleji", ext: "png" },
-              { slug: "levent-koleji", name: "Levent Okulları", ext: "png" },
-              { slug: "poyraz-koleji", name: "Poyraz Okulları", ext: "png" },
+              {
+                slug: "bahcesehir-koleji",
+                name: "Bahçeşehir Koleji",
+                ext: "jpg",
+                websiteUrl: "https://bahcesehir.k12.tr/",
+              },
+              {
+                slug: "cozum-koleji",
+                name: "Çözüm Koleji",
+                ext: "png",
+                websiteUrl: "https://www.cozumkoleji.com.tr/tr/rize-muradiye-cozum-koleji",
+              },
+              {
+                slug: "levent-koleji",
+                name: "Levent Okulları",
+                ext: "png",
+                websiteUrl: "https://leventokullari.com/",
+              },
+              {
+                slug: "poyraz-koleji",
+                name: "Poyraz Okulları",
+                ext: "png",
+                websiteUrl: "https://poyrazokullari.com/",
+              },
             ].map((school) => (
               <Link
                 key={school.slug}
-                href={`/okullar/${school.slug}`}
+                href={school.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex flex-col items-center text-center"
               >
                 <div className="w-full max-w-[320px] mx-auto rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 shadow-lg group-hover:shadow-2xl group-hover:border-primary/40 group-hover:scale-[1.02] transition-all duration-300 bg-white dark:bg-slate-800">
