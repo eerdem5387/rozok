@@ -207,22 +207,37 @@ export default async function HomePage() {
                 href={`/okullar/${school.slug}`}
                 className="group flex flex-col items-center text-center"
               >
-                <div className="relative w-full aspect-square max-w-[280px] mx-auto flex items-center justify-center rounded-3xl bg-white dark:bg-slate-800 p-8 md:p-10 border-2 border-slate-200 dark:border-slate-700 shadow-lg group-hover:shadow-2xl group-hover:border-primary/40 group-hover:scale-[1.02] transition-all duration-300">
-                  <Image
-                    src={`/${school.slug}.${school.ext}`}
-                    alt={school.name}
-                    width={240}
-                    height={240}
-                    className="object-contain w-full h-full"
-                  />
+                <div className="w-full max-w-[320px] mx-auto rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 shadow-lg group-hover:shadow-2xl group-hover:border-primary/40 group-hover:scale-[1.02] transition-all duration-300 bg-white dark:bg-slate-800">
+                  {/* Okul binası görseli */}
+                  <div className="relative w-full h-40 md:h-48">
+                    <Image
+                      src={`/okul-binalari/${school.slug}.jpeg`}
+                      alt={`${school.name} binası`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                  </div>
+                  {/* Logo */}
+                  <div className="px-6 pb-6 pt-4 flex flex-col items-center">
+                    <div className="relative w-24 h-24 md:w-28 md:h-28 -mt-12 mb-4 rounded-2xl bg-white dark:bg-slate-900 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src={`/${school.slug}.${school.ext}`}
+                        alt={school.name}
+                        width={112}
+                        height={112}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                      {school.name}
+                    </h3>
+                    <span className="mt-2 text-primary font-semibold text-sm inline-flex items-center gap-1">
+                      Okulu incele
+                      <span className="material-icons text-base">arrow_forward</span>
+                    </span>
+                  </div>
                 </div>
-                <h3 className="mt-6 text-xl md:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
-                  {school.name}
-                </h3>
-                <span className="mt-2 text-primary font-semibold text-sm inline-flex items-center gap-1">
-                  Okulu incele
-                  <span className="material-icons text-base">arrow_forward</span>
-                </span>
               </Link>
             ))}
           </div>

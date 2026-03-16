@@ -60,26 +60,41 @@ export default function OkullarPage() {
             const hasLink = !!school.websiteUrl;
             const cardContent = (
               <>
-                <div className="relative w-40 h-40 md:w-48 md:h-48 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800/50 p-6 mb-6">
-                  <Image
-                    src={`/${school.slug}.${school.logoExt}`}
-                    alt={school.name}
-                    width={192}
-                    height={192}
-                    className="object-contain w-full h-full"
-                  />
+                <div className="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mb-4">
+                  {/* Okul binası */}
+                  <div className="relative w-full h-40 md:h-44">
+                    <Image
+                      src={`/okul-binalari/${school.slug}.jpeg`}
+                      alt={`${school.name} binası`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                  </div>
+                  {/* Logo */}
+                  <div className="flex flex-col items-center px-4 pb-5 pt-3">
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 -mt-12 mb-3 rounded-2xl bg-white dark:bg-slate-900 shadow-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src={`/${school.slug}.${school.logoExt}`}
+                        alt={school.name}
+                        width={112}
+                        height={112}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
+                      {school.name}
+                    </h3>
+                    {hasLink ? (
+                      <span className="text-primary font-semibold text-sm inline-flex items-center gap-1">
+                        Siteye git
+                        <span className="material-icons text-base">open_in_new</span>
+                      </span>
+                    ) : (
+                      <span className="text-slate-400 text-sm">Link eklenmedi</span>
+                    )}
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  {school.name}
-                </h3>
-                {hasLink ? (
-                  <span className="text-primary font-semibold text-sm inline-flex items-center gap-1">
-                    Siteye git
-                    <span className="material-icons text-base">open_in_new</span>
-                  </span>
-                ) : (
-                  <span className="text-slate-400 text-sm">Link eklenmedi</span>
-                )}
               </>
             );
             const cardClass = `group flex flex-col items-center text-center bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 transition-all duration-300 ${
