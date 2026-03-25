@@ -14,6 +14,13 @@ export default function BurslulukPage() {
   const [loading, setLoading] = useState(false);
   const [grade, setGrade] = useState("8");
   const [kvkkOnay, setKvkkOnay] = useState(false);
+  const [examDay, setExamDay] = useState<"Cumartesi" | "Pazar">("Cumartesi");
+  const [examSession, setExamSession] = useState<"10:00" | "13:00">("10:00");
+
+  const examSessionsByDay: Record<"Cumartesi" | "Pazar", Array<"10:00" | "13:00">> = {
+    Cumartesi: ["10:00", "13:00"],
+    Pazar: ["10:00"],
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,6 +44,8 @@ export default function BurslulukPage() {
           tcKimlik: formData.get("tcKimlik"),
           grade: formData.get("grade"),
           currentSchool: formData.get("currentSchool"),
+          examDay: formData.get("examDay"),
+          examSession: formData.get("examSession"),
           fatherName: formData.get("fatherName"),
           fatherMeslek: formData.get("fatherMeslek"),
           fatherPhone: normalizePhone(formData.get("fatherPhone") as string),
@@ -166,6 +175,62 @@ export default function BurslulukPage() {
                         {RIZE_OKULLARI.map((okul) => (
                           <option key={okul} value={okul}>
                             {okul}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sınav Günü & Seans */}
+                <div>
+                  <div className="flex items-center gap-2 mb-6">
+                    <span className="w-1.5 h-6 bg-primary rounded-full" />
+                    <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                      Sınav Günü ve Seansı
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className={labelClass}>Sınav Günü *</label>
+                      <div className="flex gap-3 flex-wrap">
+                        {(["Cumartesi", "Pazar"] as const).map((d) => (
+                          <label key={d} className="cursor-pointer flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="examDay"
+                              value={d}
+                              checked={examDay === d}
+                              onChange={() => {
+                                setExamDay(d);
+                                const allowed = examSessionsByDay[d];
+                                if (!allowed.includes(examSession)) {
+                                  setExamSession(allowed[0]);
+                                }
+                              }}
+                              className="rounded-full border-slate-300 text-primary focus:ring-primary"
+                              required
+                            />
+                            <span className="font-medium">{d}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="examSession" className={labelClass}>
+                        Seans *
+                      </label>
+                      <select
+                        id="examSession"
+                        name="examSession"
+                        required
+                        className={inputClass}
+                        value={examSession}
+                        onChange={(e) => setExamSession(e.target.value as "10:00" | "13:00")}
+                      >
+                        {examSessionsByDay[examDay].map((s) => (
+                          <option key={s} value={s}>
+                            Saat {s}
                           </option>
                         ))}
                       </select>

@@ -32,6 +32,8 @@ export async function POST(request: Request) {
       motherWorkAddress,
       email,
       kvkkOnay,
+      examDay,
+      examSession,
     } = body;
 
     const required = [
@@ -48,6 +50,8 @@ export async function POST(request: Request) {
       ["motherPhone", motherPhone, "Anne cep telefonu"],
       ["motherWorkAddress", motherWorkAddress, "Anne iş adresi"],
       ["email", email, "E-posta"],
+      ["examDay", examDay, "Sınav günü"],
+      ["examSession", examSession, "Sınav seansı"],
     ] as const;
     for (const [key, val, label] of required) {
       if (val === undefined || val === null || String(val).trim() === "") {
@@ -78,6 +82,31 @@ export async function POST(request: Request) {
       );
     }
 
+    const examDayNorm = String(examDay).trim();
+    const examSessionNorm = String(examSession).trim();
+    const allowed: Record<string, string[]> = {
+      Cumartesi: ["10:00", "13:00"],
+      Pazar: ["10:00"],
+    };
+    if (!Object.prototype.hasOwnProperty.call(allowed, examDayNorm)) {
+      return NextResponse.json(
+        { error: "Sınav günü geçersizdir. Lütfen Cumartesi veya Pazar seçiniz." },
+        { status: 400 }
+      );
+    }
+    if (!allowed[examDayNorm].includes(examSessionNorm)) {
+      return NextResponse.json(
+        { error: "Sınav seansı geçersizdir. Lütfen seçtiğiniz güne uygun seansı seçiniz." },
+        { status: 400 }
+      );
+    }
+
+    const examDateByDay: Record<string, string> = {
+      Cumartesi: "28 Mart 2026",
+      Pazar: "29 Mart 2026",
+    };
+    const examDateLabel = `${examDateByDay[examDayNorm]} (${examDayNorm})`;
+
     let refNo = generateRefNo();
     let exists = await prisma.burslulukBasvuru.findUnique({
       where: { refNo },
@@ -106,9 +135,11 @@ export async function POST(request: Request) {
         motherWorkAddress: String(motherWorkAddress).trim(),
         email: String(email).trim(),
         kvkkOnay: !!kvkkOnay,
-        examDate: "28 - 29 Mart 2026",
+        examDay: examDayNorm,
+        examSession: examSessionNorm,
+        examDate: examDateLabel,
         examPlace: "Rize Merkez",
-        examTime: "10:00",
+        examTime: examSessionNorm,
       },
     });
     return NextResponse.json({ refNo });

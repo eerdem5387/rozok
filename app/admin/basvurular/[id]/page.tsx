@@ -113,6 +113,8 @@ export default async function AdminBasvuruDetayPage({
           <dl className="px-6 py-4">
             <InfoRow label="E-posta" value={b.email} />
             <InfoRow label="KVKK Onayı" value={b.kvkkOnay ? "Evet" : "Hayır"} />
+            <InfoRow label="Sınav Günü" value={b.examDay} />
+            <InfoRow label="Sınav Seansı" value={b.examSession} />
             <InfoRow label="Sınav Tarihi" value={b.examDate} />
             <InfoRow label="Sınav Yeri" value={b.examPlace} />
             <InfoRow label="Sınav Saati" value={b.examTime} />
