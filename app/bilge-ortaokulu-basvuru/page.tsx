@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MESLEKLER, SINIFLAR } from "@/lib/bursluluk-constants";
 
-/** Resmi okul listesi ile aynı (Güneysu genel başvuru sayfasından bağımsız). */
-const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL BİLGE İLKOKULU";
+/** Bu form yalnızca Özel Bilge ortaokulu adayları içindir. */
+const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL BİLGE ORTAOKULU";
 const inputClass =
   "w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-2.5";
 const labelClass = "text-sm font-semibold text-slate-600 dark:text-slate-400 block mb-1.5";
@@ -64,7 +64,7 @@ export default function BilgeOrtaokuluBasvuruPage() {
     <main className="container mx-auto px-4 md:px-6 py-10">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl p-8 border border-slate-100 dark:border-slate-800">
-          <h1 className="text-2xl font-bold mb-8">Özel Bilge İlkokulu — Başvuru Formu</h1>
+          <h1 className="text-2xl font-bold mb-8">Özel Bilge Ortaokulu — Başvuru Formu</h1>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
