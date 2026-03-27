@@ -147,3 +147,28 @@ model GuneysuBasvuru {
   examTime          String?
   createdAt         DateTime @default(now())
 }
+
+model BilgeIlkokuluBasvuru {
+  id                String   @id @default(cuid())
+  refNo             String   @unique
+  studentName       String
+  tcKimlik          String?
+  grade             String
+  currentSchool     String
+  fatherName        String?
+  fatherMeslek      String?
+  fatherPhone       String?
+  fatherWorkAddress String?
+  motherName        String?
+  motherMeslek      String?
+  motherPhone       String?
+  motherWorkAddress String?
+  email             String?
+  kvkkOnay          Boolean  @default(false)
+  examDay           String?
+  examSession       String?
+  examDate          String?
+  examPlace         String?
+  examTime          String?
+  createdAt         DateTime @default(now())
+}
