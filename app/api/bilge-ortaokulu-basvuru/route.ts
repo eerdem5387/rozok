@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL GÜNEYSU OKULLARI ORTAOKULU";
+const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL BİLGE İLKOKULU";
 const PHONE_REGEX = /^5[0-9]{9}$/;
 
 function normalizePhone(v: string) {
