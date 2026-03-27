@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MESLEKLER, SINIFLAR } from "@/lib/bursluluk-constants";
 
-const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL BİLGE İLKOKULU";
+const SCHOOL_NAME = "RİZE - GÜNEYSU - ÖZEL GÜNEYSU OKULLARI ORTAOKULU";
 const inputClass =
   "w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:ring-primary focus:border-primary px-4 py-2.5";
 const labelClass = "text-sm font-semibold text-slate-600 dark:text-slate-400 block mb-1.5";
@@ -14,13 +14,6 @@ export default function BilgeIlkokuluBasvuruPage() {
   const [loading, setLoading] = useState(false);
   const [grade, setGrade] = useState("8");
   const [kvkkOnay, setKvkkOnay] = useState(false);
-  const [examDay, setExamDay] = useState<"Cumartesi" | "Pazar">("Cumartesi");
-  const [examSession, setExamSession] = useState<"10:00" | "13:00">("10:00");
-
-  const examSessionsByDay: Record<"Cumartesi" | "Pazar", Array<"10:00" | "13:00">> = {
-    Cumartesi: ["10:00", "13:00"],
-    Pazar: ["10:00"],
-  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,8 +45,8 @@ export default function BilgeIlkokuluBasvuruPage() {
           motherPhone: normalizePhone(formData.get("motherPhone") as string),
           motherWorkAddress: formData.get("motherWorkAddress"),
           email: formData.get("email"),
-          examDay: formData.get("examDay"),
-          examSession: formData.get("examSession"),
+          examDay: "Cumartesi",
+          examSession: "10:00",
           kvkkOnay: true,
         }),
       });
@@ -72,7 +65,7 @@ export default function BilgeIlkokuluBasvuruPage() {
     <main className="container mx-auto px-4 md:px-6 py-10">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl p-8 border border-slate-100 dark:border-slate-800">
-          <h1 className="text-2xl font-bold mb-8">Özel Bilge İlkokulu Başvuru Formu</h1>
+          <h1 className="text-2xl font-bold mb-8">Özel Güneysu Okulları Ortaokulu Başvuru Formu</h1>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -122,46 +115,16 @@ export default function BilgeIlkokuluBasvuruPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className={labelClass}>Sınav Günü *</label>
-                <div className="flex gap-3 flex-wrap">
-                  {(["Cumartesi", "Pazar"] as const).map((d) => (
-                    <label key={d} className="cursor-pointer flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="examDay"
-                        value={d}
-                        checked={examDay === d}
-                        onChange={() => {
-                          setExamDay(d);
-                          const allowed = examSessionsByDay[d];
-                          if (!allowed.includes(examSession)) setExamSession(allowed[0]);
-                        }}
-                        className="rounded-full border-slate-300 text-primary focus:ring-primary"
-                        required
-                      />
-                      <span className="font-medium">{d}</span>
-                    </label>
-                  ))}
-                </div>
+                <label htmlFor="examDayDisplay" className={labelClass}>
+                  Sınav Günü
+                </label>
+                <input id="examDayDisplay" value="Cumartesi" readOnly className={inputClass} />
               </div>
               <div>
-                <label htmlFor="examSession" className={labelClass}>
-                  Seans *
+                <label htmlFor="examSessionDisplay" className={labelClass}>
+                  Sınav Seansı
                 </label>
-                <select
-                  id="examSession"
-                  name="examSession"
-                  required
-                  className={inputClass}
-                  value={examSession}
-                  onChange={(e) => setExamSession(e.target.value as "10:00" | "13:00")}
-                >
-                  {examSessionsByDay[examDay].map((s) => (
-                    <option key={s} value={s}>
-                      Saat {s}
-                    </option>
-                  ))}
-                </select>
+                <input id="examSessionDisplay" value="Saat 10:00" readOnly className={inputClass} />
               </div>
             </div>
 
