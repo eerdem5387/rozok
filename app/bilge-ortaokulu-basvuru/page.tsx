@@ -45,8 +45,6 @@ export default function BilgeOrtaokuluBasvuruPage() {
           motherPhone: normalizePhone(formData.get("motherPhone") as string),
           motherWorkAddress: formData.get("motherWorkAddress"),
           email: formData.get("email"),
-          examDay: "Cumartesi",
-          examSession: "10:00",
           kvkkOnay: true,
         }),
       });
@@ -65,7 +63,8 @@ export default function BilgeOrtaokuluBasvuruPage() {
     <main className="container mx-auto px-4 md:px-6 py-10">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl p-8 border border-slate-100 dark:border-slate-800">
-          <h1 className="text-2xl font-bold mb-8">Özel Güneysu Okulları Ortaokulu Başvuru Formu</h1>
+          <h1 className="text-2xl font-bold mb-2">Özel Bilge Ortaokulu — Başvuru Formu</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">{SCHOOL_NAME}</p>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -106,18 +105,36 @@ export default function BilgeOrtaokuluBasvuruPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="examDayDisplay" className={labelClass}>
-                  Sınav Günü
-                </label>
-                <input id="examDayDisplay" value="Cumartesi" readOnly className={inputClass} />
-              </div>
-              <div>
-                <label htmlFor="examSessionDisplay" className={labelClass}>
-                  Sınav Seansı
-                </label>
-                <input id="examSessionDisplay" value="Saat 10:00" readOnly className={inputClass} />
+            <div>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
+                Bu formda yalnızca <strong className="text-slate-800 dark:text-slate-200">Cumartesi, 10:00</strong>{" "}
+                seansına kayıt alınmaktadır; başka gün veya seans seçilemez.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="examDayDisplay" className={labelClass}>
+                    Sınav Günü
+                  </label>
+                  <input
+                    id="examDayDisplay"
+                    value="Cumartesi"
+                    readOnly
+                    tabIndex={-1}
+                    className={`${inputClass} cursor-not-allowed bg-slate-100 dark:bg-slate-800/80`}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="examSessionDisplay" className={labelClass}>
+                    Sınav Seansı
+                  </label>
+                  <input
+                    id="examSessionDisplay"
+                    value="10:00"
+                    readOnly
+                    tabIndex={-1}
+                    className={`${inputClass} cursor-not-allowed bg-slate-100 dark:bg-slate-800/80`}
+                  />
+                </div>
               </div>
             </div>
 

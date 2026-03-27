@@ -32,9 +32,11 @@ export async function POST(request: Request) {
       motherWorkAddress,
       email,
       kvkkOnay,
-      examDay,
-      examSession,
     } = body;
+
+    /** Bu formda sınav günü/seansı istemciden alınmaz; her zaman sabittir. */
+    const examDayNorm = "Cumartesi";
+    const examSessionNorm = "10:00";
 
     const required = [
       ["studentName", studentName, "Öğrenci adı soyadı"],
@@ -49,8 +51,6 @@ export async function POST(request: Request) {
       ["motherPhone", motherPhone, "Anne cep telefonu"],
       ["motherWorkAddress", motherWorkAddress, "Anne iş adresi"],
       ["email", email, "E-posta"],
-      ["examDay", examDay, "Sınav günü"],
-      ["examSession", examSession, "Sınav seansı"],
     ] as const;
 
     for (const [, val, label] of required) {
@@ -77,15 +77,6 @@ export async function POST(request: Request) {
     if (!PHONE_REGEX.test(motherPhoneNorm)) {
       return NextResponse.json(
         { error: "Anne cep telefonu 5 ile başlayan 10 hane olmalıdır (örn: 5333333333)." },
-        { status: 400 }
-      );
-    }
-
-    const examDayNorm = String(examDay).trim();
-    const examSessionNorm = String(examSession).trim();
-    if (examDayNorm !== "Cumartesi" || examSessionNorm !== "10:00") {
-      return NextResponse.json(
-        { error: "Bu formda yalnızca Cumartesi 10:00 seansı seçilebilir." },
         { status: 400 }
       );
     }
